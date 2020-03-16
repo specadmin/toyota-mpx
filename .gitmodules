@@ -1,0 +1,6 @@
+[submodule "samples/MPX-dev-board/lib/avr-debug"]
+	path = samples/MPX-dev-board/lib/avr-debug
+	url = https://github.com/specadmin/avr-debug
+[submodule "samples/MPX-dev-board/lib/avr-misc"]
+	path = samples/MPX-dev-board/lib/avr-misc
+	url = https://github.com/specadmin/avr-misc

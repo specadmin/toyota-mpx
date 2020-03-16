@@ -1,0 +1,138 @@
+.HEA
+.TIM Вт 17 сен 2019 20:07:21
+.APP "Eeschema 5.1.2-f72e74a~84~ubuntu18.04.1"
+
+.ADD_COM C6 330
+.ADD_COM R11 39k  Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM R12 91k  Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM R10 22k  Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM R8 0  Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM U2 XC6602P332MR  Package_TO_SOT_SMD:SOT-23
+.ADD_COM C3 10u
+.ADD_COM C2 10u
+.ADD_COM C5 0.1
+.ADD_COM C4 0.1
+.ADD_COM C1 10u
+.ADD_COM X3 Conn_02x03_Odd_Even  Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Horizontal
+.ADD_COM U3 ATmega88PA-AU  Package_QFP:TQFP-32_7x7mm_P0.8mm
+.ADD_COM R6 39k  Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM R7 20k  Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM P21 Conn_01x01  TestPoint:TestPoint_THTPad_D1.0mm_Drill0.5mm
+.ADD_COM P22 Conn_01x01  TestPoint:TestPoint_THTPad_D1.0mm_Drill0.5mm
+.ADD_COM R4 39k  Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM R5 20k  Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM R3 10k  Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM R2 10k  Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM Q1 BSS138  Package_TO_SOT_SMD:SOT-23
+.ADD_COM X1 Conn_01x03  Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical
+.ADD_COM T2 Conn_01x01  TestPoint:TestPoint_Pad_D1.0mm
+.ADD_COM P34 Conn_01x01  TestPoint:TestPoint_THTPad_D1.0mm_Drill0.5mm
+.ADD_COM P32 Conn_01x01  TestPoint:TestPoint_THTPad_D1.0mm_Drill0.5mm
+.ADD_COM P1 Conn_01x01  TestPoint:TestPoint_THTPad_D1.0mm_Drill0.5mm
+.ADD_COM P2 Conn_01x01  TestPoint:TestPoint_THTPad_D1.0mm_Drill0.5mm
+.ADD_COM P13 Conn_01x01  TestPoint:TestPoint_THTPad_D1.0mm_Drill0.5mm
+.ADD_COM P12 Conn_01x01  TestPoint:TestPoint_THTPad_D1.0mm_Drill0.5mm
+.ADD_COM D1 LED  LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM R1 2k  Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM D2 LED  LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM R9 2k  Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+.ADD_COM U1 LM1117-5.0
+.ADD_COM Z1 16MHz  project:Murata_CSTCExxxxV_3213_crystal
+.ADD_COM X2 SPI  Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical
+
+
+.ADD_TER U3.4  +5V
+.TER     U3.6
+         U3.18
+         U2.3
+         C2.1
+         U1.2
+         C5.1
+         C4.1
+         R3.2
+.ADD_TER R4.2  TXD
+.TER     R5.1
+         P2.1
+.ADD_TER C4.2  GND
+.TER     R1.2
+         P13.1
+         U3.5
+         U3.3
+         U3.21
+         U3.20
+         C1.2
+         X3.6
+         C5.2
+         C2.2
+         R12.2
+         C6.2
+         C3.2
+         U2.1
+         R9.2
+         X2.3
+         P22.1
+         R4.1
+         P21.1
+         X1.3
+         Z1.3
+         U1.1
+         R6.1
+.ADD_TER R3.1  /RX
+.TER     U3.30
+         X1.2
+         Q1.3
+.ADD_TER R5.2  /TX
+.TER     U3.31
+         X1.1
+.ADD_TER P1.1  RXD
+.TER     R2.2
+         Q1.1
+.ADD_TER R2.1  +3V3
+.TER     C3.1
+         U2.2
+         Q1.2
+         P12.1
+.ADD_TER U3.28  Net-(R7-Pad2)
+.TER     R7.2
+.ADD_TER U3.9  Net-(D2-Pad2)
+.TER     D2.2
+.ADD_TER R9.1  Net-(D2-Pad1)
+.TER     D2.1
+.ADD_TER U3.8  Net-(U3-Pad8)
+.TER     Z1.2
+.ADD_TER U3.29  /RST
+.TER     X2.6
+.ADD_TER X2.5  /SCK
+.TER     U3.17
+.ADD_TER U3.16  /MISO
+.TER     X2.4
+.ADD_TER U3.14  /DBG
+.TER     X2.1
+.ADD_TER R1.1  Net-(D1-Pad1)
+.TER     D1.1
+.ADD_TER D1.2  Net-(D1-Pad2)
+.TER     P32.1
+.ADD_TER U3.7  Net-(T2-Pad1)
+.TER     T2.1
+         Z1.1
+.ADD_TER P34.1  KEY
+.TER     R6.2
+         R7.1
+.ADD_TER U3.15  /MOSI
+.TER     X2.2
+.ADD_TER R10.1  Net-(R10-Pad1)
+.TER     R12.1
+         R11.2
+.ADD_TER X3.3  Net-(R11-Pad1)
+.TER     R11.1
+.ADD_TER R8.1  Net-(R8-Pad1)
+.TER     U3.1
+.ADD_TER R8.2  Net-(C6-Pad1)
+.TER     U3.32
+         R10.2
+         C6.1
+.ADD_TER X3.1  +12V
+.TER     U1.3
+         C1.1
+
+.END

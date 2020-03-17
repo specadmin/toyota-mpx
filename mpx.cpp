@@ -83,32 +83,31 @@ __inline void stuffing_reset()
  */
 __inline BYTE stuffing_push(BYTE value)
 {
-    register BYTE res = 0;
     value = (value > 0) ? 1 : 0;
     if(value == stuffing.prev)
     {
         stuffing.counter++;
+        return 0;
     }
-    else
+    volatile register BYTE res = 0;
+    if(stuffing.counter == 5)
     {
-        if(stuffing.counter == 5)
-        {
-            // stuffing bit detected
-            res = 1;
-        }
-        stuffing.counter = 1;
+        // stuffing bit detected
+        res = 1;
     }
+    stuffing.counter = 1;
     stuffing.prev = value;
     return res;
 }
 //-----------------------------------------------------------------------------
 /**
- * @brief Checks whether the stuffing bit is needed after the previous push
+ * @brief Checks whether the stuffing bit is needed after the previous push for
+ * transmission
  * @return 1 - stuffing bit should be the next
  */
 __inline BYTE stuffing_check()
 {
-    return (stuffing.counter < 5) ? 0 : 1;
+    return (stuffing.counter >= 5);
 }
 //-----------------------------------------------------------------------------
 /**
@@ -122,9 +121,9 @@ __inline BYTE stuffing_bit()
 }
 //-----------------------------------------------------------------------------
 /**
- * @brief Checks whether we have a bus control
- * @return true - We have lost the arbitration of the bus, another device is
- * transmitting a message with a higher priority or greater message-id
+ * @brief Checks whether the driver controls the MPX bus during transmission
+ * @return true - The driver has lost the control of the bus, another device is
+ * transmitting a message with a greater priority or higher message-id
  */
 __inline bool arbitration_lost()
 {
@@ -152,9 +151,7 @@ __inline BYTE CRC8(const BYTE* buf, BYTE size)
 //-----------------------------------------------------------------------------
 __inline void suspend_transmission()
 {
-    //MPX_HW_DEBUG_SYNC();
-
-    // arbitration lost detected -- suspend the transmission
+    // suspend the transmission
     clr_bit(MPX_TX_PORT, MPX_TX_BIT);
     tx.state = TX_QUEUED;
     MPX_TX_LED_OFF();
@@ -190,29 +187,20 @@ __inline void start_transmission()
 //-----------------------------------------------------------------------------
 __inline void get_bit()
 {
-    //MPX_HW_DEBUG(2);
     static BYTE EOM = 0;
     EOM = EOM << 1 | RX_PIN;
     if(EOM == 0x7E)
     {
-        // MPX_HW_DEBUG(20);
         // end-of-message detected
         rx.buf[rx.size++] = 0x7E;
         if(!rx.crc)
         {
             // if received CRC and calculated CRC are equal, then
-            // the result of its' XOR operation should be zero
+            // the result CRC should be zero
             if(rx.callback)
             {
                 rx.callback(rx.size, rx.buf);
             }
-        }
-        else
-        {
-            MPX_HW_DEBUG_SYNC();
-            DSTR("CRC!");
-            DUMP_MEM(rx.buf, rx.size);
-            halt();
         }
         rx_reset();
         return;
@@ -221,7 +209,6 @@ __inline void get_bit()
     if(!rx.busy && RX_PIN)
     {
         // start bit detected
-        //MPX_HW_DEBUG_SYNC();
         MPX_RX_LED_ON();
         rx_reset();
         rx.busy = true;
@@ -285,87 +272,62 @@ __inline void send_bit()
             clr_bit(MPX_TX_PORT, MPX_TX_BIT);
             // prepare arbitration check
             half_bit_timer();
-            //resync_timer();
             tx.state = TX_ARBITRATION;
         }
     }
     else
     {
-//        if(tx.pos == tx.size)
-//        {
-            // end of message
-//            value = (0x7E << tx.shift) & 0x80;
-            switch(tx.shift++)
+        switch(tx.shift++)
+        {
+        case 0:
+            // prepare to receive checksum and acknowlegement reply
+            resync_timer();
+            tx.state = TX_ACKNOWLEGEMENT;
+            // prevent detecting acknowlegement as a start bit
+            rx.busy = true;
+            break;
+        case 1:
+            // checksum reply
+            tx.result = RX_PIN << 1;
+            break;
+        case 2:
+            // acknowlegement reply
+            tx.result = (tx.result | RX_PIN);
+            break;
+        case 3:
+            // resync back into transmission mode
+            resync_timer();
+            if(!RX_PIN)
             {
-            case 0:
-                // prepare to receive checksum and acknowlegement reply
-                resync_timer();
-                //start_timer();
-                tx.state = TX_ACKNOWLEGEMENT;
-                // prevent detecting acknowlegement as a start bit
-                rx.busy = true;
-                break;
-            case 1:
-                // checksum reply
-                tx.result = RX_PIN << 1;
-                break;
-            case 2:
-                // acknowlegement reply
-                tx.result = (tx.result | RX_PIN);
-                break;
-            case 3:
-                // resync back into transmission mode
-                //MPX_HW_DEBUG_SYNC();
-                resync_timer();
-                //start_timer();
-                if(!RX_PIN)
-                {
-                    tx.result = tx.result << 1 | 1;
-                    //** tx.result values
-                    // "000" = 0 -- unexpected error
-                    // "001" = 1 -- NACK
-                    // "011" = 3 -- ACK
-                    // "111" = 7 -- BAD CRC
-                }
-                else
-                {
-                    // unexpected bus level
-                    tx.result = 0;
-                }
-                // transmission completed
-                MPX_TX_LED_OFF();
-                if(tx.callback)
-                {
-                    tx.callback(tx.result);
-                }
-                tx.state = TX_IDLE;
-                //bus.idle = true;
-                rx.busy = false;
-                //stop_timer();
-                break;
+                tx.result = tx.result << 1 | 1;
+                //** tx.result values
+                // "001" = 1 -- NACK
+                // "011" = 3 -- ACK
+                // "111" = 7 -- BAD CRC
             }
-//        }
-//        else
-//        {
-//            // end of frame
-//            // clear pending interrupt flag
-//            set_bit(EIFR, INTF0);
-//            // enable rx timer syncronization back
-//            set_bit(EIMSK, MPX_RX_INT);
-//            if(++tx.shift >= 5)
-//            {
-//                tx.pos = 0;
-//
-//                return;
-//            }
-//        }
+            else
+            {
+                // unexpected bus level
+                tx.result = MPX_ERR_UNKNOWN;
+            }
 
+            // transmission completed
+            MPX_TX_LED_OFF();
+            if(tx.callback)
+            {
+                tx.callback(tx.result);
+            }
+            tx.state = TX_IDLE;
+            rx.busy = false;
+            break;
+        }
     }
 }
 //-----------------------------------------------------------------------------
 ISR(MPX_RX_INT_VECT)
 {
     MPX_HW_DEBUG_ON();
+
     // resync the timer
     if(tx.state == TX_IN_PROGRESS)      // do not resync while transmission is in progress
     {
@@ -376,25 +338,23 @@ ISR(MPX_RX_INT_VECT)
     {
         resync_timer();
     }
-//    tx.sync = true;
     bus.idle = false;
     if(tx.state == TX_IN_PROGRESS && arbitration_lost())
     {
         //MPX_HW_DEBUG_SYNC();
         resync_timer();
         suspend_transmission();
-
- //       get_bit();
-        //DHEX8(2, rx.byte, rx.bit);
     }
     // continue further receiption
     rx.same_bit_counter = 0;
+
     MPX_HW_DEBUG_OFF();
 }
 //-----------------------------------------------------------------------------
 ISR(MPX_TIMER_VECT)
 {
     MPX_HW_DEBUG_ON();
+
     // change the timer interval to full-bit value
     full_bit_timer();
     switch(tx.state)
@@ -402,33 +362,24 @@ ISR(MPX_TIMER_VECT)
     case TX_ARBITRATION:
         if(arbitration_lost())
         {
-            //MPX_HW_DEBUG_SYNC();
             suspend_transmission();
             get_bit();
         }
         else
         {
+            // arbitration is OK, continue the transmission
             stuffing_push(0);
             tx.state = TX_IN_PROGRESS;
             half_bit_timer();
-            //resync_timer();
         }
         break;
     case TX_IN_PROGRESS:
-//        if(tx.sync)
-//        {
-//            //break;
-//        }
     case TX_ACKNOWLEGEMENT:
         // transmission mode
         send_bit();
         break;
     default:
         // receiption mode
-//        if(++rx.same_bit_counter > 5)
-//        {
-//            MPX_TIMER_OCRA = F_CPU / 64 / MPX_BAUD_RATE / 2;     // half-bit period
-//        }
         if(++rx.same_bit_counter > 6)
         {
             // idle state detected
@@ -443,16 +394,15 @@ ISR(MPX_TIMER_VECT)
             }
             else
             {
+                // go to idle mode
                 stop_timer();
             }
-            //MPX_HW_DEBUG_OFF();
         }
         else
         {
             get_bit();
         }
     }
-//    tx.sync = false;
     MPX_HW_DEBUG_OFF();
 }
 //-----------------------------------------------------------------------------
@@ -463,9 +413,7 @@ void mpx_init(void (*rx_callback)(BYTE size, const BYTE* buf))
 
     bus.idle = true;
     rx.busy = false;
-//    tx.sync = false;
     tx.state = TX_IDLE;
-
     stuffing.counter = 0;
     stuffing.prev = 0;
 
@@ -477,12 +425,6 @@ void mpx_init(void (*rx_callback)(BYTE size, const BYTE* buf))
     set_bit(HW_DEBUG_DIR, HW_DEBUG_BIT);
     set_bit(HW_DEBUG_SYNC_DIR, HW_DEBUG_SYNC_BIT);
     #endif
-
-    MPX_RX_LED_ON();
-    MPX_TX_LED_ON();
-    mdelay(500);
-    MPX_RX_LED_OFF();
-    MPX_TX_LED_OFF();
 
     MPX_TIMER_TCCR_CTC = _bit(MPX_TIMER_WGM_CTC);    // CTC (clear timer on compare) mode
     set_bit(MPX_TIMER_TIMSK, MPX_TIMER_OCIEA);       // enable timer compare match interrupt
@@ -504,23 +446,29 @@ BYTE mpx_send(BYTE priority, BYTE address, BYTE size, const BYTE* data, void (*c
     }
     if((priority > 15) || (size < 2) || (size > MPX_MAX_DATA_SIZE + 1))
     {
-        // priority range: 0...15
-        // size range: 2...12 (includes message id)
+        // valid priority range: 0...15
+        // valid size range: 2...12 (includes message id)
         return MPX_ERR_BAD_PARAMETER;
     }
     // priority and size
     tx.buf[0] = (priority << 4) | (size + 1);
+
     // destination address
     tx.buf[1] = address;
+
     // data
     memcpy(tx.buf + 2, data, size);
+
     // CRC
     tx.buf[size + 2] = CRC8(tx.buf, size + 2);
+
     // EOM
     tx.buf[size + 3] = 0x7E;
+
     tx.size = size + 3;
     tx.callback = callback;
     tx.state = TX_QUEUED;
+
     if(bus.idle)
     {
         start_transmission();

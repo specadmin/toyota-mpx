@@ -38,6 +38,7 @@
     #define MPX_HW_DEBUG_ON
     #define MPX_HW_DEBUG_OFF
     #define MPX_HW_DEBUG(us)
+    #define MPX_HW_DEBUG_SYNC()
 #endif
 //-----------------------------------------------------------------------------
 #ifdef MPX_RX_LED_PORT
@@ -61,37 +62,6 @@
 #define MPX_MAX_FRAME_SIZE  (MPX_HEADER_SIZE + MPX_MAX_DATA_SIZE + 1 + 1)
 //-----------------------------------------------------------------------------
 #define RX_PIN (test_bit(MPX_RX_PIN, MPX_RX_BIT))
-////-----------------------------------------------------------------------------
-//struct MPX_message
-//{
-//    union
-//    {
-//        BYTE PRI_MS;
-//        struct
-//        {
-//            unsigned MESSAGE_SIZE: 4;
-//            unsigned PRIORITY: 4;
-//        };
-//    };
-//    BYTE DST;
-//    BYTE ID;
-//    BYTE DATA[11];
-//    BYTE data_size;
-//    BYTE CRC;
-//};
-//-----------------------------------------------------------------------------
-enum
-{
-    START,
-    PRIORITY,
-    SIZE,
-    DESTINATION,
-    ID,
-    DATA,
-    CRC,
-    EOM,
-    IDLE
-};
 //-----------------------------------------------------------------------------
 enum
 {

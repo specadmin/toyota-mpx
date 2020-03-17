@@ -11,7 +11,7 @@ enum mpx_result
     MPX_ERR_UNKNOWN = 4,    // an unknown error has happened during the transmission
     MPX_ERR_CRC     = 7,    // the message was sent, but recepient reported a checksum error
     MPX_ERR_BUSY,           // the interface is busy by processing a previous call
-    MPX_ERR_BAD_PARAMETER,  // a bad parameter was specified in a function call
+    MPX_ERR_BAD_PARAMETER   // a bad parameter was specified in a function call
 };
 //-----------------------------------------------------------------------------
 /**
@@ -54,7 +54,8 @@ void mpx_init(void (*rx_callback)(BYTE size, const BYTE* buf));
  * function is being executed. A slow function could cause data lost in your
  * MPX driver. The function receives the only parameter, that indicates the
  * result of the transmission (ACK, NACK or bad CRC).
- * @return
+ * @return Returns MPX_ERR_QUEUED, MPX_ERR_BUSY or MPX_ERR_BAD_PARAMETER (see
+ * the codes description above).
  */
 BYTE mpx_send(BYTE priority, BYTE address, BYTE size, const BYTE* data, void (*callback)(BYTE result) = NULL);
 //-----------------------------------------------------------------------------

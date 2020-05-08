@@ -1,37 +1,40 @@
-# MPX Codes for Toyota Harrier and Lexus RX300 model 1 (1998 - 2003) #
+# MPX Codes #
+**Toyota Harrier and Lexus RX300 model 1 (1998 - 2003)**
+
+----
 
 ## Vehicle ##
 
-* Ignition "on"
+* Ignition "on"  
     `FE 24 00 80`
 
-* Vehicle speed (= 60 km/h)
+* Vehicle speed (= 60 km/h)  
     `FE 24 3C 00`
 
-* Parking brake
-    ???
+* Parking brake  
+    `???`
 
-* Driver's seatbelt is not fastened
+* Driver's seatbelt is not fastened  
     `FE `
 
-* ? Outside temperature (not sure)
+* ? Outside temperature (not sure)  
     `FE CD 41`
 
 
 
 ## Engine status ##
 
-* Engine temperature (= 75 degrees Celsium)
+* Engine temperature (= 75 degrees Celsium)  
     `FE 2C 96`
 
-* Low oil pressure
+* Low oil pressure  
     `FE D4 10`
 
-* Tachometer value
-    ???
+* Tachometer value  
+    `???`
 
-* Engine is running
-    ???
+* Engine is running  
+    `???`
 
 
 
@@ -39,31 +42,31 @@
 
 ### A/T selector's position ###
 
-* A/T selector "L"
+* A/T selector "L"  
     `FE 40 01 00`
 
-* A/T selector "2"
+* A/T selector "2"  
     `FE 40 02 00`
 
-* A/T selector "D"
+* A/T selector "D"  
     `FE 40 10 00`
 
-* A/T selector "N"
+* A/T selector "N"  
     `FE 40 20 00`
 
-* A/T selector "R"
+* A/T selector "R"  
     `FE 40 40 00`
 
-* A/T selector "P"
+* A/T selector "P"  
     `FE 40 80 00`
 
 
 ### A/T options ###
 
-* "ECT SNOW" mode on
+* "ECT SNOW" mode on  
     `FE D2 10 00 00`
 
-* "ECT PWR" mode on (if present)
+* "ECT PWR" mode on (if present)  
     `FE D2 20 00 00`
 
 
@@ -72,63 +75,63 @@
 
 ### Driver's Door Status ###
 
-* Driver's door unlocked
+* Driver's door unlocked  
     `FE DB 10 00`
 
-* Driver's door opened
+* Driver's door opened  
     `FE DB 20 00`
 
-* Driver's door unlock button pushed
+* Driver's door unlock button pushed  
     `FE DB 40 40`
 
-* Driver's door lock button pushed
+* Driver's door lock button pushed  
     `FE DB 40 80`
 
-* Driver's door warning or status changed (not sure)
+* Driver's door warning or status changed (not sure)  
     `FE DB 80 00`
 
-* Driver's door key turned to unlock
+* Driver's door key turned to unlock  
     `FE DB 01 00`
 
-* Driver's door key turned to lock
+* Driver's door key turned to lock  
     `FE DB 02 00`
 
-* Power windows locked by driver's door button
+* Power windows locked by driver's door button  
     `FE DB 00 20`
 
 
 
 ### Front Passenger's Door Status ###
 
-* Front passenger's door unlocked
+* Front passenger's door unlocked  
     `FE DC 10 00`
 
-* Front passenger's door opened
+* Front passenger's door opened  
     `FE DC 20 00`
 
-* Front passenger's door unlock button pushed
+* Front passenger's door unlock button pushed  
     `FE DC 40 40`
 
-* Front passenger's door lock button pushed
+* Front passenger's door lock button pushed  
     `FE DC 40 80`
 
-* Front passenger's door warning or status changed (not sure)
+* Front passenger's door warning or status changed (not sure)  
     `FE DC 80 00`
 
-* Front passenger's door key turned to unlock
+* Front passenger's door key turned to unlock  
     `FE DC 01 00`
 
-* Front passenger's door key turned to lock
+* Front passenger's door key turned to lock  
     `FE DC 02 00`
 
 
 
 ### Rear Right Door Status ###
 
-* Rear right door unlocked
+* Rear right door unlocked  
     `FE DD 10`
 
-* Rear right door opened
+* Rear right door opened  
     `FE DD 20`
 
 
@@ -136,48 +139,48 @@
 
 ### Rear Left Door Status ###
 
-* Rear right door unlocked
+* Rear left door unlocked  
     `FE DE 10`
 
-* Rear right door opened
+* Rear left door opened  
     `FE DE 20`
 
 
 
 ### Back (5-th) Door Status ###
 
-* Back door unlocked
-    `fe df 00 00 00 80 00 00`
+* Back door unlocked (not sure)  
+    `fe df 10 00 00 00 00 00`
 
-* Back door opened
+* Back door opened (not sure)  
     `fe df 00 00 00 80 00 00`
 
 
 
 ## Doors control ##
 
-* Driver's door unlock button pushed
+* Driver's door unlock button pushed  
     `FE DB 40 40`
 
-* Driver's door lock button pushed
+* Driver's door lock button pushed  
     `FE DB 40 80`
 
-* Driver's door key turned to unlock
+* Driver's door key turned to unlock  
     `FE DB 01 00`
 
-* Driver's door key turned to lock
+* Driver's door key turned to lock  
     `FE DB 02 00`
 
-* Front passenger's door unlock button pushed
+* Front passenger's door unlock button pushed  
     `FE DC 40 40`
 
-* Front passenger's door lock button pushed
+* Front passenger's door lock button pushed  
     `FE DC 40 80`
 
-* Front passenger's door key turned to unlock
+* Front passenger's door key turned to unlock  
     `FE DC 01 00`
 
-* Front passenger's door key turned to lock
+* Front passenger's door key turned to lock  
     `FE DC 02 00`
 
 
@@ -187,16 +190,16 @@
 
 All power windows are controlled by the one command (see bellow). The following data bytes order is used: front right, rear right, rear left, front left.
 
-* Close all windows (repeat the command until it is required)
+* Close all windows (repeat the command until it is required)  
     `D1 E0 40 40 40 40`
 
-* Close all windows in auto mode
+* Close all windows in auto mode  
     `D1 E0 60 60 60 60`
 
-* Open all windows (repeat the command until it is required)
+* Open all windows (repeat the command until it is required)  
     `D1 E0 80 80 80 80`
 
-* Open all windows in auto mode
+* Open all windows in auto mode  
     `D1 E0 A0 A0 A0 A0`
 
 
@@ -205,40 +208,40 @@ All power windows are controlled by the one command (see bellow). The following 
 
 ### Climate Satus ###
 
-* Target inside temperature (temp = 16 + data / 2)
+* Target inside temperature (temp = 16 + data / 2)  
     `45 FD 21`
 
-* Max cold target inside temperature
+* Max cold target inside temperature  
     `45 FD 00`
 
-* Max hot target inside temperature
+* Max hot target inside temperature  
     `45 FD 37`
 
-* Target inside temperature initialization
+* Target inside temperature initialization  
     `45 FD 38`
 
-* Target inside temperature unknown (fan is off)
+* Target inside temperature unknown (fan is off)  
     `45 FD 39`
 
-* Blow direction on windshield only
+* Blow direction on windshield only  
     `45 FC 10 00`
 
-* Blow direction on windshield and feet
+* Blow direction on windshield and feet  
     `45 FC 00 40`
 
-* Blow direction on feet only
+* Blow direction on feet only  
     `45 FC 00 20`
 
-* Blow direction on head and feet
+* Blow direction on head and feet  
     `45 FC 01 00`
 
-* Blow direction on head only
+* Blow direction on head only  
     `45 FC 00 80`
 
-* AUTO mode
+* AUTO mode  
     `45 FC 80 00`
 
-* Blower motor speed level (bits 5...7, 0xB0 = level 6)
+* Blower motor speed level (bits 5...7, 0xB0 = level 6)  
     `45 1B B0`
 
 
@@ -246,26 +249,26 @@ All power windows are controlled by the one command (see bellow). The following 
 
 ### Climate Control (Control Panel) ###
 
-* No buttons pushed
+* No buttons pushed  
     `D2 15 00`
 
-* Any button pushed
+* Any button pushed  
     `D2 15 01`
 
-* "OFF" button pushed
+* "OFF" button pushed  
     `D2 15 41`
 
-* "FRONT" glass heater button pushed
+* "FRONT" glass heater button pushed  
     `D2 15 11`
 
-* Back glass heater button pushed
+* Back glass heater button pushed  
     `D2 15 09`
 
-* Recycling button pushed
+* Recycling button pushed  
     `D2 15 21`
 
-* "A/C" button pushed
+* "A/C" button pushed  
     `D2 15 05`
 
-* "AUTO" button pushed
+* "AUTO" button pushed  
     `D2 15 81`

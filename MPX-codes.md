@@ -1,5 +1,7 @@
 # MPX Codes #
-**Toyota Harrier and Lexus RX300 model 1 (1998 - 2003)**
+
+MPX codes seem to be the same for all Toyota models. However some of them could be different or not supported.
+
 
 ----
 
@@ -9,32 +11,53 @@
     `FE 24 00 80`
 
 * Vehicle speed (= 60 km/h)  
-    `FE 24 3C 00`
+    `FE 24 3C`
 
-* Parking brake  
-    `???`
+* Average vehicle speed (speed = data / 10, km/h)  
+    `45 25 00 9D`
+
+* Parking brake on  
+    `FE DF 80`
+
+* Brake pedal pushed  
+    `FE E4 04`
+
+* Tail light is on  
+    `FE E4 10`
+
+* Head light is on  
+    `FE E4 20`
+
+* Ignition key inserted  
+    `FE E4 01`
 
 * Driver's seatbelt is not fastened  
-    `FE `
-
-* ? Outside temperature (not sure)  
-    `FE CD 41`
+    `FE E4 00 80`
 
 
+## Engine ##
 
-## Engine status ##
-
-* Engine temperature (= 75 degrees Celsium)  
-    `FE 2C 96`
+* Engine temperature (temp = data / 2, degrees Celsium)  
+    `FE 2C B5`
 
 * Low oil pressure  
     `FE D4 10`
 
-* Tachometer value  
-    `???`
+* Battery powered  
+    `FE D4 20`
 
-* Engine is running  
-    `???`
+* Tachometer value (RPM = data / 512 * 100)  
+    `D2 26 13 B0`
+
+* Momentary fuel rate (fuel rate = data / 100, L/h)  
+    `46 20 01 85`
+
+* Momentary fuel rate (fuel rate = data / 10, L/100km)  
+    `45 90 01 36`
+
+* Average fuel rate (fuel rate = data / 10, L/100km)  
+    `45 A3 00 76`
+
 
 
 
@@ -64,10 +87,10 @@
 ### A/T options ###
 
 * "ECT SNOW" mode on  
-    `FE D2 10 00 00`
+    `46 D2 10 00 00`
 
 * "ECT PWR" mode on (if present)  
-    `FE D2 20 00 00`
+    `46 D2 20 00 00`
 
 
 
@@ -204,27 +227,25 @@ All power windows are controlled by the one command (see bellow). The following 
 
 
 
-## Climate ##
+## Climate Satus ##
 
-### Climate Satus ###
+* Outside temperature (temp = data - 48, degrees Celsium)  
+    `FE CD 41`
 
-* Target inside temperature (temp = 16 + data / 2)  
+* Target inside temperature (temp = 16 + data / 2, degrees Celsium)  
     `45 FD 21`
 
-* Max cold target inside temperature  
+* "Max cold" target inside temperature  
     `45 FD 00`
 
-* Max hot target inside temperature  
+* "Max hot" target inside temperature  
     `45 FD 37`
 
 * Target inside temperature initialization  
     `45 FD 38`
 
-* Target inside temperature unknown (fan is off)  
+* Climate control is switched off  
     `45 FD 39`
-
-* Blow direction on windshield only  
-    `45 FC 10 00`
 
 * Blow direction on windshield and feet  
     `45 FC 00 40`
@@ -232,11 +253,20 @@ All power windows are controlled by the one command (see bellow). The following 
 * Blow direction on feet only  
     `45 FC 00 20`
 
+* Blow direction on head only  
+    `45 FC 00 80`
+
 * Blow direction on head and feet  
     `45 FC 01 00`
 
-* Blow direction on head only  
-    `45 FC 00 80`
+* Air conditioner on  
+    `45 FC 02 00`
+
+* Blow direction on windshield only  
+    `45 FC 10 00`
+
+* Recycling mode  
+    `45 FC 20 00`
 
 * AUTO mode  
     `45 FC 80 00`
@@ -244,10 +274,12 @@ All power windows are controlled by the one command (see bellow). The following 
 * Blower motor speed level (bits 5...7, 0xB0 = level 6)  
     `45 1B B0`
 
+* Back glass heater on  
+    `D2 D7 20`
 
 
 
-### Climate Control (Control Panel) ###
+## Climate Control Actions (Control Panel) ##
 
 * No buttons pushed  
     `D2 15 00`
@@ -272,3 +304,23 @@ All power windows are controlled by the one command (see bellow). The following 
 
 * "AUTO" button pushed  
     `D2 15 81`
+
+* Temp encoder turn CW (1...3 -- the ammount of steps, works only when ignition is on)  
+    `46 1A 81`  
+    `46 1A 82`  
+    `46 1A 83`  
+
+* Temp encoder turn CCW (1...3 -- the ammount of steps, works only when ignition is on)  
+    `46 1A 01`  
+    `46 1A 02`  
+    `46 1A 03`  
+
+* Blower motor speed encoder turn CW (1...3 -- the ammount of steps, works only when ignition is on)  
+    `46 1A 00 81`  
+    `46 1A 00 82`  
+    `46 1A 00 83`  
+
+* Blower motor speed encoder turn CCW (1...3 -- the ammount of steps, works only when ignition is on)  
+    `46 1A 00 01`  
+    `46 1A 00 02`  
+    `46 1A 00 03`  

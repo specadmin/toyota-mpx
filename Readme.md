@@ -3,6 +3,7 @@
 This library is a software driver for MPX (BEAN) bus interface, designed by Toyota and used in some Toyota and Lexus cars. Find the content of the [docs](https://github.com/specadmin/toyota-mpx/tree/master/docs) folder for better understanding of this bus.
 The driver works in asynchonous mode and does not block other routings until MPX packets are being received or transmited.
 
+You may found some MPX packets' description [here](MPX-codes.md).
 
 
 ### Requirements ###

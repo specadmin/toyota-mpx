@@ -9,7 +9,7 @@ You may found some MPX packets' description [here](MPX-codes.md).
 
 ### Physical layer ###
 
-<div align="center"> <img src="photos/image_1115.png" width="600"/> </div>
+<div align="center"> <img src="photos/image_1115.png"/> </div>
 
 
 
@@ -43,7 +43,7 @@ There is no any special documentation for this library. The library code was wri
 void mpxReceiver(BYTE size, const BYTE* buf)
 {
     // make something with received packet
-    
+
     ...
 }
 

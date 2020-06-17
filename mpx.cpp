@@ -417,8 +417,8 @@ void mpx_init(void (*rx_callback)(BYTE size, const BYTE* buf))
     stuffing.counter = 0;
     stuffing.prev = 0;
 
-    #ifdef MPX_LED_PORT
-    set_bit(MPX_LED_DIR, MPX_LED_BIT);
+    #ifdef MPX_RX_LED_PORT
+    set_bit(MPX_RX_LED_DIR, MPX_RX_LED_BIT);
     #endif
 
     #ifdef HW_DEBUG_PORT

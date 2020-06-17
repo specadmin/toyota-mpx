@@ -6,9 +6,11 @@ The driver works in asynchonous mode and does not block other routings until MPX
 You may found some MPX packets' description [here](MPX-codes.md).
 
 
+
 ### Physical layer ###
 
-<div align="center"> <img src="photos/image_1115.png"/> </div>
+<div align="center"> <img src="photos/image_1115.png" width="600"/> </div>
+
 
 
 ### Requirements ###

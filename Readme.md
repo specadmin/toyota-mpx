@@ -6,6 +6,13 @@ The driver works in asynchonous mode and does not block other routings until MPX
 You may found some MPX packets' description [here](MPX-codes.md).
 
 
+
+### Physical layer ###
+
+<div align="center"> <img src="photos/image_1115.png"/> </div>
+
+
+
 ### Requirements ###
 
  * AVR MPU;
@@ -27,6 +34,32 @@ You may found some MPX packets' description [here](MPX-codes.md).
 ### Documentation ###
 
 There is no any special documentation for this library. The library code was written to be efficient and clear for your understanding, so it is full of comments. See the [header file](https://github.com/specadmin/toyota-mpx/blob/master/mpx.h) for methods descriptions. Also you may find a [sample project](https://github.com/specadmin/toyota-mpx/tree/master/samples/MPX-dev-board), that uses this library, inside.
+
+
+
+### Usage example ###
+
+```
+void mpxReceiver(BYTE size, const BYTE* buf)
+{
+    // make something with received packet
+
+    ...
+}
+
+int main()
+{
+    ...
+
+    mpx_init(mpxReceiver);
+    enable_interrupts();
+
+    BYTE data[] = { 0xCD, 0x48 };
+    mpx_send(6, 0xFE, sizeof(data), data);
+
+    ...
+}
+```
 
 
 

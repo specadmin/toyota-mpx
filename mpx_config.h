@@ -35,8 +35,8 @@
     #define MPX_HW_DEBUG(us)        { MPX_HW_DEBUG_ON(); udelay(us); MPX_HW_DEBUG_OFF(); }
     #define MPX_HW_DEBUG_SYNC()     { set_bit(HW_DEBUG_SYNC_PORT, HW_DEBUG_SYNC_BIT); udelay(2); clr_bit(HW_DEBUG_SYNC_PORT, HW_DEBUG_SYNC_BIT); }
 #else
-    #define MPX_HW_DEBUG_ON
-    #define MPX_HW_DEBUG_OFF
+    #define MPX_HW_DEBUG_ON()
+    #define MPX_HW_DEBUG_OFF()
     #define MPX_HW_DEBUG(us)
     #define MPX_HW_DEBUG_SYNC()
 #endif

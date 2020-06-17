@@ -37,6 +37,32 @@ There is no any special documentation for this library. The library code was wri
 
 
 
+### Usage example ###
+
+```
+void mpxReceiver(BYTE size, const BYTE* buf)
+{
+    // make something with received packet
+    
+    ...
+}
+
+int main()
+{
+    ...
+
+    mpx_init(mpxReceiver);
+    enable_interrupts();
+
+    BYTE data[] = { 0xCD, 0x48 };
+    mpx_send(6, 0xFE, sizeof(data), data);
+
+    ...
+}
+```
+
+
+
 ### Adding to your project ###
 
 The library is managed as a git submodule. Please refer to git submodule documentation for better understanding.

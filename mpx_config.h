@@ -21,13 +21,13 @@
   Hardware debugger configuration
   ===========================================================================*/
 
-#define HW_DEBUG_PORT           PORTD
-#define HW_DEBUG_DIR            DDRD
-#define HW_DEBUG_BIT            6
-
-#define HW_DEBUG_SYNC_PORT      PORTC
-#define HW_DEBUG_SYNC_DIR       DDRC
-#define HW_DEBUG_SYNC_BIT       5
+//#define HW_DEBUG_PORT           PORTD
+//#define HW_DEBUG_DIR            DDRD
+//#define HW_DEBUG_BIT            6
+//
+//#define HW_DEBUG_SYNC_PORT      PORTC
+//#define HW_DEBUG_SYNC_DIR       DDRC
+//#define HW_DEBUG_SYNC_BIT       5
 
 #ifdef HW_DEBUG_PORT
     #define MPX_HW_DEBUG_ON()       { set_bit(HW_DEBUG_PORT, HW_DEBUG_BIT); }

@@ -174,6 +174,7 @@ __inline void start_transmission()
     if(!RX_PIN)
     {
         // start of frame (a start bit)
+        MPX_HW_DEBUG_ON();
         tx.pos = 0;
         tx.shift = 0;
         stuffing_reset();
@@ -182,6 +183,7 @@ __inline void start_transmission()
         set_bit(MPX_TX_PORT, MPX_TX_BIT);
         full_bit_timer();
         start_timer();
+        MPX_HW_DEBUG_OFF();
     }
 }
 //-----------------------------------------------------------------------------
@@ -354,7 +356,6 @@ ISR(MPX_RX_INT_VECT)
 ISR(MPX_TIMER_VECT)
 {
     MPX_HW_DEBUG_ON();
-
     // change the timer interval to full-bit value
     full_bit_timer();
     switch(tx.state)
@@ -423,6 +424,9 @@ void mpx_init(void (*rx_callback)(BYTE size, const BYTE* buf))
 
     #ifdef HW_DEBUG_PORT
     set_bit(HW_DEBUG_DIR, HW_DEBUG_BIT);
+    #endif
+
+    #ifdef HW_DEBUG_SYNC_PORT
     set_bit(HW_DEBUG_SYNC_DIR, HW_DEBUG_SYNC_BIT);
     #endif
 

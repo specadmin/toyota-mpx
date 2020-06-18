@@ -1,38 +1,50 @@
 # MPX Codes #
 
-MPX codes seem to be the same for all Toyota models. However some of them could be different or not supported.
-
+MPX codes seem to be the same for all Toyota and Lexus cars. However some of them could be different or not be present in your model.
 
 ----
 
 ## Vehicle ##
 
-* Ignition "on"  
-    `FE 24 00 80`
 
-* Vehicle speed (= 60 km/h)  
-    `FE 24 3C`
+* Body subsystems powered ("ACC" and "ON" key positions)
+    `FE DF 20 00 00 00 00 00`
 
-* Average vehicle speed (speed = data / 10, km/h)  
-    `45 25 00 9D`
+* Ignition ON  ("ON" key position)
+    `FE DF 40 00 00 00 00 00` (from body MCU)
+
+
 
 * Parking brake on  
-    `FE DF 80`
+    `FE DF 80 00 00 00 00 00`
 
 * Brake pedal pushed  
-    `FE E4 04`
+    `FE E4 04 00`
 
 * Tail light is on  
-    `FE E4 10`
+    `FE E4 10 00`
 
 * Head light is on  
-    `FE E4 20`
+    `FE E4 20 00`
 
-* Ignition key inserted  
-    `FE E4 01`
+* Front fog light is on  
+    `FE E4 00 04`
+
+* Rear fog light is on  
+    `FE E4 08 00`
 
 * Driver's seatbelt is not fastened  
     `FE E4 00 80`
+
+* VSC warning indicator ON (combination meter)
+    `45 D0 00 08 00 00`
+
+* ABS warning indicator ON (combination meter)
+    `45 D0 00 10 00 00`
+
+* Check engine indicator ON (combination meter)
+    `45 D0 00 20 00 00`
+
 
 
 ## Engine ##
@@ -172,11 +184,11 @@ MPX codes seem to be the same for all Toyota models. However some of them could 
 
 ### Back (5-th) Door Status ###
 
-* Back door unlocked (not sure)  
-    `fe df 10 00 00 00 00 00`
+* Back door unlocked
+    `E0 96 10`
 
 * Back door opened (not sure)  
-    `fe df 00 00 00 80 00 00`
+    `FE DF 10 00 00 80 00 00`
 
 
 

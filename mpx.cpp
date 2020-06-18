@@ -44,13 +44,13 @@ static struct
 __inline void start_timer()
 {
     MPX_TIMER_TCNT = 0;
-    MPX_TIMER_TCCR_CS |= _bit(MPX_TIMER_CS1);
+    MPX_TIMER_TCCRB |= _bit(MPX_TIMER_CS1);
     set_bit(TIFR0, OCF0A);
 }
 //-----------------------------------------------------------------------------
 __inline void stop_timer()
 {
-    MPX_TIMER_TCCR_CS &= ~_bit(MPX_TIMER_CS1);
+    MPX_TIMER_TCCRB &= ~_bit(MPX_TIMER_CS1);
 }
 //-----------------------------------------------------------------------------
 __inline void half_bit_timer()
@@ -67,7 +67,7 @@ __inline void resync_timer()
 {
     MPX_TIMER_TCNT = 0;
     half_bit_timer();
-    MPX_TIMER_TCCR_CS |= _bit(MPX_TIMER_CS1);
+    MPX_TIMER_TCCRB |= _bit(MPX_TIMER_CS1);
     set_bit(TIFR0, OCF0A);
 }
 //-----------------------------------------------------------------------------
@@ -430,7 +430,7 @@ void mpx_init(void (*rx_callback)(BYTE size, const BYTE* buf))
     set_bit(HW_DEBUG_SYNC_DIR, HW_DEBUG_SYNC_BIT);
     #endif
 
-    MPX_TIMER_TCCR_CTC = _bit(MPX_TIMER_WGM_CTC);    // CTC (clear timer on compare) mode
+    MPX_TIMER_TCCRA = _bit(MPX_TIMER_WGM_CTC);    // CTC (clear timer on compare) mode
     set_bit(MPX_TIMER_TIMSK, MPX_TIMER_OCIEA);       // enable timer compare match interrupt
 
     // keep in sync, correcting the timer on every level change

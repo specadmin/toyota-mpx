@@ -4,18 +4,22 @@
 
 #define MPX_BAUD_RATE           10000
 
+#ifndef MPX_TIMER_ID
+#error Please define MPX_TIMER_ID (0 or 2 for ATmega devices)
+#endif
+
 // MPX timer
-#define MPX_TIMER_VECT          TIMER0_COMPA_vect
-#define MPX_TIMER_TCCR_CTC      TCCR0A
-#define MPX_TIMER_TCCR_CS       TCCR0B
-#define MPX_TIMER_TIMSK         TIMSK0
-#define MPX_TIMER_OCRA          OCR0A
-#define MPX_TIMER_TCNT          TCNT0
-#define MPX_TIMER_TIFR          TIFR0
-#define MPX_TIMER_WGM_CTC       WGM01
-#define MPX_TIMER_CS0           CS00
-#define MPX_TIMER_CS1           CS01
-#define MPX_TIMER_OCIEA         OCIE0A
+#define MPX_TIMER_VECT          CONCAT(CONCAT(TIMER, MPX_TIMER_ID), _COMPA_vect)
+#define MPX_TIMER_TCCRA         CONCAT(CONCAT(TCCR, MPX_TIMER_ID), A)
+#define MPX_TIMER_TCCRB         CONCAT(CONCAT(TCCR, MPX_TIMER_ID), B)
+#define MPX_TIMER_TIMSK         CONCAT(TIMSK, MPX_TIMER_ID)
+#define MPX_TIMER_OCRA          CONCAT(CONCAT(OCR, MPX_TIMER_ID), A)
+#define MPX_TIMER_TCNT          CONCAT(TCNT, MPX_TIMER_ID)
+#define MPX_TIMER_TIFR          CONCAT(TIFR, MPX_TIMER_ID)
+#define MPX_TIMER_WGM_CTC       CONCAT(CONCAT(WGM, MPX_TIMER_ID), 1)
+#define MPX_TIMER_CS0           CONCAT(CONCAT(CS, MPX_TIMER_ID), 0)
+#define MPX_TIMER_CS1           CONCAT(CONCAT(CS, MPX_TIMER_ID), 1)
+#define MPX_TIMER_OCIEA         CONCAT(CONCAT(OCIE, MPX_TIMER_ID), A)
 
 /*===========================================================================
   Hardware debugger configuration

@@ -1,11 +1,11 @@
 EESchema-LIBRARY Version 2.4
 #encoding utf-8
 #
-# Atmel_ATmega88
+# BEAN-adapter-rescue_ATmega88-Atmel
 #
-DEF Atmel_ATmega88 U 0 40 Y Y 1 F N
+DEF BEAN-adapter-rescue_ATmega88-Atmel U 0 40 Y Y 1 F N
 F0 "U" 0 100 50 H V C CNN
-F1 "Atmel_ATmega88" 0 -100 50 H V C CNN
+F1 "BEAN-adapter-rescue_ATmega88-Atmel" 0 -100 50 H V C CNN
 F2 "" 0 -100 50 H I C CNN
 F3 "" 0 -100 50 H I C CNN
 DRAW

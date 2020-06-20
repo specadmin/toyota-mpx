@@ -7,6 +7,10 @@
 #include "mpx_config.h"
 #include "../avr-debug/debug.h"
 //-----------------------------------------------------------------------------
+static BYTE queue_head = 0;     // queue write index
+static BYTE queue_tail = 0;     // queue read index
+static BYTE queue[MPX_QUEUE_SIZE][MPX_MAX_PACKET_SIZE];
+//-----------------------------------------------------------------------------
 static struct
 {
     bool idle;
@@ -315,11 +319,11 @@ __inline void send_bit()
 
             // transmission completed
             MPX_TX_LED_OFF();
+            tx.state = TX_IDLE;
             if(tx.callback)
             {
                 tx.callback(tx.result);
             }
-            tx.state = TX_IDLE;
             rx.busy = false;
             break;
         }
@@ -478,5 +482,52 @@ BYTE mpx_send(BYTE priority, BYTE address, BYTE size, const BYTE* data, void (*c
         start_transmission();
     }
     return MPX_ERR_QUEUED;
+}
+//-----------------------------------------------------------------------------
+#define mpx_queue_is_empty()        (queue_head == queue_tail)
+#define mpx_queue_is_not_empty()    (queue_head != queue_tail)
+//-----------------------------------------------------------------------------
+void mpx_queue_check(__unused BYTE result)
+{
+    if(mpx_queue_is_not_empty())
+    {
+        BYTE index = queue_tail;
+        queue_tail = (queue_tail + 1) % MPX_QUEUE_SIZE;
+        mpx_send(queue[index][0], queue[index][1], queue[index][2], queue[index] + 3, mpx_queue_check);
+    }
+}
+//-----------------------------------------------------------------------------
+BYTE mpx_queue(BYTE priority, BYTE address, BYTE size, const BYTE* data)
+{
+    BYTE result = 0;
+    if(mpx_queue_is_empty() && tx.state == TX_IDLE)
+    {
+        result = mpx_send(priority, address, size, data, mpx_queue_check);
+    }
+    else
+    {
+        disable_interrupts();
+        BYTE next_index = (queue_head + 1) % MPX_QUEUE_SIZE;
+        if(next_index == queue_tail)
+        {
+            // step on self tail
+            result = MPX_ERR_QUEUE_OVERFLOW;
+        }
+        else
+        {
+            queue[queue_head][0] = priority;
+            queue[queue_head][1] = address;
+            queue[queue_head][2] = size;
+            memcpy(queue[queue_head] + 3, data, size);
+            queue_head = next_index;
+        }
+        resume_interrupts();
+    }
+    return result;
+}
+//-----------------------------------------------------------------------------
+BYTE mpx_CRC8(const BYTE* buf, BYTE size)
+{
+    return CRC8(buf, size);
 }
 //-----------------------------------------------------------------------------

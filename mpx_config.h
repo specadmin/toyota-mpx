@@ -3,6 +3,7 @@
 //-----------------------------------------------------------------------------
 
 #define MPX_BAUD_RATE           10000
+#define MPX_MAX_PACKET_SIZE     15      // PRI + ML + DST-ID + MSG-ID + DATA
 
 #ifndef MPX_TIMER_ID
 #error Please define MPX_TIMER_ID (0 or 2 for ATmega devices)
@@ -66,6 +67,10 @@
 #define MPX_MAX_FRAME_SIZE  (MPX_HEADER_SIZE + MPX_MAX_DATA_SIZE + 1 + 1)
 //-----------------------------------------------------------------------------
 #define RX_PIN (test_bit(MPX_RX_PIN, MPX_RX_BIT))
+//-----------------------------------------------------------------------------
+#ifndef MPX_QUEUE_SIZE
+#define MPX_QUEUE_SIZE  16
+#endif
 //-----------------------------------------------------------------------------
 enum
 {

@@ -1,9 +1,21 @@
 ### Description ###
 
 This library is a software driver for MPX (BEAN) bus interface, designed by Toyota and used in some Toyota and Lexus cars. Find the content of the [docs](https://github.com/specadmin/toyota-mpx/tree/master/docs) folder for better understanding of this bus.
-The driver works in asynchonous mode and does not block other routings until MPX packets are being received or transmited.
+The driver works in asynchonous mode and does not block other routings, while MPX packets are being received or transmited.
 
 You may found some MPX packets' description [here](MPX-codes.md).
+
+
+### Features ###
+
+* Asynchronous receiver
+* Asynchronous transmitter
+* Independent receiption and transmission
+* Arbitration control
+* Transmission FIFO queue
+* Configurable pins
+* Easy timer select
+
 
 
 
@@ -26,8 +38,6 @@ You may found some MPX packets' description [here](MPX-codes.md).
 ### Limitations ###
 
  * The driver has NO it's own address. So it receives all the packets, that are being transmited in the MPX network. The driver does NOT filter any packets and does NOT send acknowlegement to any packets.
-
- * The driver has NO it's own transmission queue. So mpx_send() will return MPX_ERR_BUSY every time until the previous packet will not be sent completely.
 
 
 

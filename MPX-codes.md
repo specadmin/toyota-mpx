@@ -221,7 +221,7 @@ Example: `45 1B B0` -- climate control blower motor speed level 6
 <table>
     <tr>
         <td> byte0 </td>
-        <td rowspan=2> Momentary fuel rate (0.01 L/h), big-endian </td>
+        <td rowspan=2> Momentary fuel rate per time (0.01 L/h), big-endian </td>
     </tr>
     <tr>
         <td> byte1 </td>
@@ -246,7 +246,7 @@ Example: `46 20 07 40` -- momentary fuel rate 18.56 L/h
     </tr>
     <tr> 
         <td> bit7 </td>
-        <td> Ignition ON  ("ON" key position), from combination meter   </td> 
+        <td> Combination meter power ON </td> 
     </tr>
     <tr> 
         <td> bit6 </td>  
@@ -289,12 +289,49 @@ Example: `FE 24 23 80` -- vehicle speed 35 km/h, ignition is ON
 <table>
     <tr>
         <td> byte0 </td>
-        <td rowspan=2> Average vehicle speed (0.1 km/h), big-endian </td>
+        <td rowspan=2> Average vehicle speed (see Note for units description), big-endian </td>
     </tr>
     <tr>
         <td> byte1 </td>
     </tr>
+    <tr>
+        <td rowspan=9> byte2 </td>
+    </tr>  
+    <tr> 
+        <td> bit7 </td>
+        <td> 0.1 km/h </td> 
+    </tr>
+    <tr> 
+        <td> bit6 </td>  
+        <td> 0.1 MPH </td> 
+    </tr>
+    <tr> 
+        <td> bit5 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit4 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit3 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit2 </td>  
+        <td>  </td> 
+    </tr>
+    <tr> 
+        <td> bit1 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit0 </td>  
+        <td> </td> 
+    </tr>
 </table>
+
+Note: units are defined in byte2 (if it is present) or 0x6A packet.
 
 Example: `45 25 02 FC` -- average vehicle speed 76.4 km/h
 
@@ -361,11 +398,11 @@ Example: `FE 2C A1` -- engine temperature 80.5 Celsius degrees
     </tr>
     <tr> 
         <td> bit3 </td>  
-        <td> </td> 
+        <td> 4 </td> 
     </tr>
     <tr> 
         <td> bit2 </td>  
-        <td> </td> 
+        <td> 3 </td> 
     </tr>
     <tr> 
         <td> bit1 </td>  
@@ -422,39 +459,8 @@ Example: `FE 40 10 00` -- A/T selector position "D"
 
 <table>
     <tr>
-        <td rowspan=9> byte0 </td>
-    </tr>
-    <tr> 
-        <td> bit7 </td>
-        <td>  </td> 
-    </tr>
-    <tr> 
-        <td> bit6 </td>  
-        <td> </td> 
-    </tr>
-    <tr> 
-        <td> bit5 </td>  
-        <td> </td> 
-    </tr>
-    <tr> 
-        <td> bit4 </td>  
-        <td> </td> 
-    </tr>
-    <tr> 
-        <td> bit3 </td>  
-        <td> </td> 
-    </tr>
-    <tr> 
-        <td> bit2 </td>  
-        <td> </td> 
-    </tr>
-    <tr> 
-        <td> bit1 </td>  
-        <td> </td> 
-    </tr>
-    <tr> 
-        <td> bit0 </td>  
-        <td> </td> 
+        <td> byte0 </td>
+        <td colspan=2> Trip computer units <br> 0x00 - distance in km, speed in 0.1 km/h, fuel rate in 0.1 km/L <br> 0x10 - distance in miles, speed in 0.1 MPH, fuel rate in 0.1 MPG <br> 0x11 - distance in km, speed in 0.1 km/h, fuel rate in 0.1 L/100km </td> 
     </tr>
     <tr>
         <td rowspan=9> byte1 </td>
@@ -481,7 +487,7 @@ Example: `FE 40 10 00` -- A/T selector position "D"
     </tr>
     <tr> 
         <td> bit2 </td>  
-        <td>  </td> 
+        <td> </td> 
     </tr>
     <tr> 
         <td> bit1 </td>  
@@ -503,14 +509,49 @@ Example: `40 6A 10 80`
 <table>
     <tr>
         <td> byte0 </td>
-        <td rowspan=2> Trip distance from last ignition ON (km or miles, see Note), big endian </td>
+        <td rowspan=2> Trip distance from last ignition ON (see Note for units description), big endian </td>
     </tr>
     <tr>
         <td> byte1 </td>
     </tr>
+    <tr>
+        <td rowspan=9> byte2 </td>
+    </tr>  
+    <tr> 
+        <td> bit7 </td>
+        <td> km </td> 
+    </tr>
+    <tr> 
+        <td> bit6 </td>  
+        <td> miles </td> 
+    </tr>
+    <tr> 
+        <td> bit5 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit4 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit3 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit2 </td>  
+        <td>  </td> 
+    </tr>
+    <tr> 
+        <td> bit1 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit0 </td>  
+        <td> </td> 
+    </tr>
 </table>
 
-Note: units are defined in 0x?? packet
+Note: units are defined in byte2 (if it is present) or 0x6A packet.
 
 Example: `45 76 01 3B` -- trip distance 315, see Note (from last ignition on)  
 
@@ -674,12 +715,49 @@ Example: `FE 8C 98 00 18`
 <table>
     <tr>
         <td> byte0 </td>
-        <td rowspan=2> Momentary fuel rate (0.1 L/100km), big-endian </td>
+        <td rowspan=2> Momentary fuel rate per distance (see Note for units description), big-endian </td>
     </tr>
     <tr>
         <td> byte1 </td>
     </tr>
+    <tr>
+        <td rowspan=9> byte2 </td>
+    </tr>  
+    <tr> 
+        <td> bit7 </td>
+        <td> 0.1 km/L </td> 
+    </tr>
+    <tr> 
+        <td> bit6 </td>  
+        <td> 0.1 L/100km </td> 
+    </tr>
+    <tr> 
+        <td> bit5 </td>  
+        <td> 0.1 MPG (USA) </td> 
+    </tr>
+    <tr> 
+        <td> bit4 </td>  
+        <td> 0.1 MPG (English) </td> 
+    </tr>
+    <tr> 
+        <td> bit3 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit2 </td>  
+        <td>  </td> 
+    </tr>
+    <tr> 
+        <td> bit1 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit0 </td>  
+        <td> </td> 
+    </tr>
 </table>
+
+Note: units are defined in byte2 (if it is present) or 0x6A packet.
 
 Example: `45 90 01 08` -- momentary fuel rate 26.4 L/100km
 
@@ -737,17 +815,99 @@ Example: `E0 96 10` -- back door unlocked
 <table>
     <tr>
         <td> byte0 </td>
-        <td rowspan=2> Average fuel rate (0.1 L/100km), big-endian </td>
+        <td rowspan=2> Average fuel rate (see Note for units description), big-endian </td>
     </tr>
     <tr>
         <td> byte1 </td>
     </tr>
+    <tr>
+        <td rowspan=9> byte2 </td>
+    </tr>  
+    <tr> 
+        <td> bit7 </td>
+        <td> 0.1 km/L </td> 
+    </tr>
+    <tr> 
+        <td> bit6 </td>  
+        <td> 0.1 L/100km </td> 
+    </tr>
+    <tr> 
+        <td> bit5 </td>  
+        <td> 0.1 MPG (USA) </td> 
+    </tr>
+    <tr> 
+        <td> bit4 </td>  
+        <td> 0.1 MPG (Englsih) </td> 
+    </tr>
+    <tr> 
+        <td> bit3 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit2 </td>  
+        <td>  </td> 
+    </tr>
+    <tr> 
+        <td> bit1 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit0 </td>  
+        <td> </td> 
+    </tr>
 </table>
+
+Note: units are defined in byte2 (if it is present) or 0x6A packet.
 
 Example: `45 A3 00 74` -- average fuel rate 11.6 L/100km
 
 <br>
 
+
+
+### 0xCA ##
+
+<table>
+    <tr>
+        <td rowspan=9> byte0 </td>
+    </tr>
+    <tr> 
+        <td> bit7 </td>
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit6 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit5 </td>  
+        <td>  </td> 
+    </tr>
+    <tr> 
+        <td> bit4 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit3 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit2 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit1 </td>  
+        <td> </td> 
+    </tr>
+    <tr> 
+        <td> bit0 </td>  
+        <td> </td> 
+    </tr>
+</table>
+
+Example: `45 CA 01`
+
+<br>
 
 
 ### 0xCD ###
@@ -947,7 +1107,7 @@ Example: `45 D0 00 00 00 00`
     </tr>
     <tr> 
         <td> bit1 </td>  
-        <td> </td> 
+        <td> CRUISE ON </td> 
     </tr>
     <tr> 
         <td> bit0 </td>  
@@ -1039,7 +1199,7 @@ Example: `45 D2 10 00 00` -- ECT SNOW mode
     </tr>
     <tr> 
         <td> bit7 </td>
-        <td> Disable combination meter backlight </td> 
+        <td> Engine starter is running </td> 
     </tr>
     <tr> 
         <td> bit6 </td>  

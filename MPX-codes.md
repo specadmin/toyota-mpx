@@ -289,7 +289,7 @@ Example: `FE 24 23 80` -- vehicle speed 35 km/h, ignition is ON
 <table>
     <tr>
         <td> byte0 </td>
-        <td rowspan=2> Average vehicle speed (see Note for units description), big-endian </td>
+        <td rowspan=2 colspan=2> Average vehicle speed (see Note for units description), big-endian </td>
     </tr>
     <tr>
         <td> byte1 </td>
@@ -331,9 +331,9 @@ Example: `FE 24 23 80` -- vehicle speed 35 km/h, ignition is ON
     </tr>
 </table>
 
-Note: units are defined in byte2 (if it is present) or 0x6A packet.
+Note: units are defined in byte2 (if it is present) or in 0x6A packet.
 
-Example: `45 25 02 FC` -- average vehicle speed 76.4 km/h
+Example: `45 25 02 FC 80` -- average vehicle speed 76.4 km/h
 
 <br>
 
@@ -509,7 +509,7 @@ Example: `40 6A 10 80`
 <table>
     <tr>
         <td> byte0 </td>
-        <td rowspan=2> Trip distance from last ignition ON (see Note for units description), big endian </td>
+        <td rowspan=2 colspan=2> Trip distance from last ignition ON (see Note for units description), big endian </td>
     </tr>
     <tr>
         <td> byte1 </td>
@@ -551,9 +551,9 @@ Example: `40 6A 10 80`
     </tr>
 </table>
 
-Note: units are defined in byte2 (if it is present) or 0x6A packet.
+Note: units are defined in byte2 (if it is present) or in 0x6A packet.
 
-Example: `45 76 01 3B` -- trip distance 315, see Note (from last ignition on)  
+Example: `45 76 01 3B 40` -- trip distance 315 miles (from last ignition on)  
 
 
 <br>
@@ -715,7 +715,7 @@ Example: `FE 8C 98 00 18`
 <table>
     <tr>
         <td> byte0 </td>
-        <td rowspan=2> Momentary fuel rate per distance (see Note for units description), big-endian </td>
+        <td rowspan=2  colspan=2> Momentary fuel rate per distance (see Note for units description), big-endian </td>
     </tr>
     <tr>
         <td> byte1 </td>
@@ -757,9 +757,9 @@ Example: `FE 8C 98 00 18`
     </tr>
 </table>
 
-Note: units are defined in byte2 (if it is present) or 0x6A packet.
+Note: units are defined in byte2 (if it is present) or in 0x6A packet.
 
-Example: `45 90 01 08` -- momentary fuel rate 26.4 L/100km
+Example: `45 90 01 08 40` -- momentary fuel rate 26.4 L/100km
 
 <br>
 
@@ -815,7 +815,7 @@ Example: `E0 96 10` -- back door unlocked
 <table>
     <tr>
         <td> byte0 </td>
-        <td rowspan=2> Average fuel rate (see Note for units description), big-endian </td>
+        <td rowspan=2 colspan=2> Average fuel rate (see Note for units description), big-endian </td>
     </tr>
     <tr>
         <td> byte1 </td>
@@ -857,9 +857,9 @@ Example: `E0 96 10` -- back door unlocked
     </tr>
 </table>
 
-Note: units are defined in byte2 (if it is present) or 0x6A packet.
+Note: units are defined in byte2 (if it is present) or in 0x6A packet.
 
-Example: `45 A3 00 74` -- average fuel rate 11.6 L/100km
+Example: `45 A3 00 74 40` -- average fuel rate 11.6 L/100km
 
 <br>
 

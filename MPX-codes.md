@@ -331,7 +331,7 @@ Example: `FE 24 23 80` -- vehicle speed 35 km/h, ignition is ON
     </tr>
 </table>
 
-Note: units are defined in byte2 (if it is present) or in 0x6A packet.
+Note: units are defined in byte2 (if it is present) or in [0x6A](#0x6A) packet.
 
 Example: `45 25 02 FC 80` -- average vehicle speed 76.4 km/h
 
@@ -551,7 +551,7 @@ Example: `40 6A 10 80`
     </tr>
 </table>
 
-Note: units are defined in byte2 (if it is present) or in 0x6A packet.
+Note: units are defined in byte2 (if it is present) or in [0x6A](#0x6A) packet.
 
 Example: `45 76 01 3B 40` -- trip distance 315 miles (from last ignition on)  
 
@@ -757,7 +757,7 @@ Example: `FE 8C 98 00 18`
     </tr>
 </table>
 
-Note: units are defined in byte2 (if it is present) or in 0x6A packet.
+Note: units are defined in byte2 (if it is present) or in [0x6A](#0x6A) packet.
 
 Example: `45 90 01 08 40` -- momentary fuel rate 26.4 L/100km
 
@@ -857,7 +857,7 @@ Example: `E0 96 10` -- back door unlocked
     </tr>
 </table>
 
-Note: units are defined in byte2 (if it is present) or in 0x6A packet.
+Note: units are defined in byte2 (if it is present) or in [0x6A](#0x6A) packet.
 
 Example: `45 A3 00 74 40` -- average fuel rate 11.6 L/100km
 

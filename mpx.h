@@ -1,7 +1,8 @@
 #ifndef MPX_H
 #define MPX_H
 //-----------------------------------------------------------------------------
-#include "../lib/avr-misc/avr-misc.h"
+#include <string.h>
+#include "../avr-misc/avr-misc.h"
 //-----------------------------------------------------------------------------
 enum mpx_result
 {

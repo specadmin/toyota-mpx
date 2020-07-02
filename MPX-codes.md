@@ -1529,7 +1529,7 @@ Example: `FE DC 10 00` -- fron paggenger's door unlocked
     </tr>
 </table>
 
-Example: `FE DD 30 00` -- Rear right door unlocked and opened
+Example: `FE DD 30` -- Rear right door unlocked and opened
 
 <br>
 
@@ -1575,7 +1575,7 @@ Example: `FE DD 30 00` -- Rear right door unlocked and opened
     </tr>
 </table>
 
-Example: `FE DE 30 00` -- Rear left door unlocked and opened
+Example: `FE DE 30` -- Rear left door unlocked and opened
 
 <br>
 

@@ -2,6 +2,28 @@
 #define MPX_CONFIG_H
 //-----------------------------------------------------------------------------
 
+#define MPX_RX_PORT         PORTD
+#define MPX_RX_DIR          DDRD
+#define MPX_RX_PIN          PIND
+#define MPX_RX_BIT          2
+
+#define MPX_RX_INT          INT0
+#define MPX_RX_INT_VECT     INT0_vect
+#define MPX_RX_ISC0         ISC00
+#define MPX_RX_ISC1         ISC01
+
+#define MPX_TX_PORT         PORTB
+#define MPX_TX_DIR          DDRB
+#define MPX_TX_BIT          1
+
+#define MPX_RX_LED_PORT     PORTD
+#define MPX_RX_LED_DIR      DDRD
+#define MPX_RX_LED_BIT      5
+
+#define MPX_TIMER_ID        0
+
+//-----------------------------------------------------------------------------
+
 #define MPX_BAUD_RATE           10000
 #define MPX_MAX_PACKET_SIZE     15      // PRI + ML + DST-ID + MSG-ID + DATA
 

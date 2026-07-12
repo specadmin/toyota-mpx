@@ -1,1 +1,1 @@
-unsigned char _sreg;
+unsigned char _sreg __attribute__((used));

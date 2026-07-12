@@ -1,11 +1,9 @@
 //-----------------------------------------------------------------------------
 // MPX.cpp
 //-----------------------------------------------------------------------------
-#include <string.h>
+#include "avr-misc/avr-misc.h"
 #include "mpx.h"
-#include "config.h"
 #include "mpx_config.h"
-#include "../avr-debug/debug.h"
 //-----------------------------------------------------------------------------
 static BYTE queue_head = 0;     // queue write index
 static BYTE queue_tail = 0;     // queue read index
